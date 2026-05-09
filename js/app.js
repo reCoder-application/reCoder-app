@@ -235,6 +235,7 @@ saveBtn.addEventListener('click', function() {
     const aroma = document.getElementById('aroma').value;
     const process = document.getElementById('process').value;
     const dripper = document.getElementById('dripper').value;
+    const recipe = document.getElementById('recipe').value;
     const shop = document.getElementById('shop').value;
     const note = document.getElementById('memo').value;
     
@@ -261,6 +262,7 @@ saveBtn.addEventListener('click', function() {
         aroma: aroma,
         process: process,
         dripper: dripper,
+        recipe: recipe,
         shop: shop,
         note: note,
         isFavorite: false,
