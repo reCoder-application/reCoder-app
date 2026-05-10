@@ -109,14 +109,17 @@ function renderCard(log) {
             <div class="card-footer">
                 <button class="action-btn favorite-btn ${log.isFavorite ? 'active' : ''}" data-id="${log.id}">
                     <i data-lucide="star"></i>
+                    <div>favorite</div>
                     <span>${log.isFavorite ? 'お気に入り' : 'お気に入りに追加'}</span>
                 </button>
 
                 <button class = "action-btn edit-btn" data-id = "${log.id}"> 
                     <i data-lucide = "edit"></i>
+                    <div>edit</div>
                 </button>
                 <button class="action-btn delete-btn" data-id = "${log.id}">
                     <i data-lucide="trash-2"></i>
+                    <div>delete</div>
                 </button>
             </div>
         </div>
