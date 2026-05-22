@@ -81,13 +81,15 @@ function renderCard(log) {
                     <!---品種--->
                     <div class="meta-info" style="margin-top: 4px;">
                         <span><i data-lucide="sprout"></i> ${log.variety}</span>
+                        <span>/</span>
+                        <span><i data-lucide="droplets"></i> ${log.process || 'undefined'}</span>
                     </div>
 
                     <!---プロセスと使ったドリッパー--->
                     <div class="meta-info" style="margin-top: 4px;">
-                        <span><i data-lucide="droplets"></i> ${log.process || 'undefined'}</span>
-                        <span>/</span>
                         <span><i data-lucide="filter"></i> ${log.dripper || 'undefined'}</span>
+                        <span>/</span>
+                        <span><i data-lucide = "notebook-text"></i> ${log.recipe || 'undefined'}</span>
                     </div>
 
                     <!---購入店--->
