@@ -191,7 +191,6 @@ function initChart(id, flavor) {
             }
         }
     });
-
     lucide.createIcons();
 }
 
