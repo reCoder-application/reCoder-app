@@ -56,7 +56,7 @@ function resetForm() {
 
 function renderCard(log) {
     // 既存データとの互換性のため、beanNameがあればproductNameとして扱う
-    const displayName = log.productName || log.beanName || '名称未設定';
+    const displayName = log.productName || log.beanName || 'undefined';
 
     const cardHtml = /*html*/`
         <div class="glass-card" data-id="${log.id}">
@@ -81,27 +81,29 @@ function renderCard(log) {
                     <!---品種--->
                     <div class="meta-info" style="margin-top: 4px;">
                         <span><i data-lucide="sprout"></i> ${log.variety}</span>
+                        <span>/</span>
+                        <span><i data-lucide="droplets"></i> ${log.process || 'undefined'}</span>
                     </div>
 
                     <!---プロセスと使ったドリッパー--->
                     <div class="meta-info" style="margin-top: 4px;">
-                        <span><i data-lucide="droplets"></i> ${log.process || '未記録'}</span>
+                        <span><i data-lucide="filter"></i> ${log.dripper || 'undefined'}</span>
                         <span>/</span>
-                        <span><i data-lucide="filter"></i> ${log.dripper || '未登録'}</span>
+                        <span><i data-lucide = "notebook-text"></i> ${log.recipe || 'undefined'}</span>
                     </div>
 
                     <!---購入店--->
                     <div class="meta-info" style="margin-top: 4px;">
-                        <span><i data-lucide="shopping-bag"></i> ${log.shop || '未登録'}</span>
+                        <span><i data-lucide="shopping-bag"></i> ${log.shop || 'undefined'}</span>
                     </div>
 
                     <div class = "meta-info" style = "margin-top: 4px;">
-                        <span><i data-lucide = "message-square"></i> ${log.aroma || '未登録'}</span>
+                        <span><i data-lucide = "message-square"></i> ${log.aroma || 'undefined'}</span>
                     </div>
                 </div>
             </div>
 
-            <p class="notes"><i data-lucide="sticky-note"></i> ${log.note || 'メモなし'}</p>
+            <p class="notes"><i data-lucide="sticky-note"></i> ${log.note || 'undefined'}</p>
             <div class = "chart-container">
                 <canvas id = "chart-${log.id}"></canvas>
             </div>
@@ -189,7 +191,6 @@ function initChart(id, flavor) {
             }
         }
     });
-
     lucide.createIcons();
 };
 
