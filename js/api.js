@@ -3,6 +3,7 @@ function syncStorage() {
 };
 
 // async: 処理に時間を要する関数に用いる
+// サーバとの通信には時間がかかるため、async/awaitを用いる。
 async function loadLogs() {
     
 };

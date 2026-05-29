@@ -192,7 +192,7 @@ function initChart(id, flavor) {
         }
     });
     lucide.createIcons();
-}
+};
 
 
 // データ処理関数
@@ -200,7 +200,7 @@ function initChart(id, flavor) {
 // LocalStorageへの保存処理
 function syncStorage() {
     localStorage.setItem('coffeeLogs', JSON.stringify(coffeeLogs));
-}
+};
 
 
 // イベントリスナー群
