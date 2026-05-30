@@ -1,0 +1,83 @@
+:root {
+    --bg-dark: #ffffff;
+    /*黒なら#121212*/
+    --primary: #00ce82;
+    --glass-bg: rgba(255,255,255,0.05); /*半透明の白*/
+    --text-main: #ffffff;
+    --text-muted: #a0a0a0;
+    --glass-border: #a0a0a0;
+}
+
+.auth-container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 0 16px;
+    text-align: center;
+}
+
+.auth-container h2 {
+    color: var(--primary);
+    margin-bottom: 24px;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column; /* 子要素を縦に配置*/
+}
+
+.auth-input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.auth-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 8px;
+}
+.auth-btn:hover {
+    background: #00b371;
+}
+
+.auth-switch {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+.auth-switch a {
+    color: var(--primary);
+    text-decoration: none;
+    cursor: pointer;
+}
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+.error-message {
+    color: #ff4444;
+    font-size: 0.9rem;
+    margin-top: 8px;
+    display: none; /* エラーがある時だけJavaScriptで表示する */
+}
+/* ヘッダーのログアウトボタン用 */
+#logout-btn {
+    margin-left: auto;
+    background: none;
+    border: 1px solid var(--glass-border);
+    color: var(--text-muted);
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    display: none; /* 初期状態は非表示（ログイン後に表示） */
+}
+#logout-btn:hover {
+    color: white;
+    border-color: white;
+}
