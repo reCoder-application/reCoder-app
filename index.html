@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href ="styles/modal.css">
         <link rel="stylesheet" href = "styles/responsive.css">
+        <link rel="stylesheet" href = "styles/auth.css">
     </head>
     <body>
     <div id="app">
@@ -30,11 +31,28 @@
             <div class="logo">
                 <span>reCoder</span>
             </div>
+            <button id = "logout-btn">ログアウト</button>
         </header>
 
         <main class="main-content">
+
+            <section id = "auth-page" class = "auth-container">
+                <div class = "glass-card">
+                    <h2 id = "auth-title">ログイン</h2>
+                    <div class = "auth-form">
+                        <input type = "email" id="auth-email" placeholder="メールアドレス">
+                        <input type = "password" id = "auth-password" placeholder="パスワード(6文字以上)">
+                        <p id = "auth-error" class = "error-message"></p>
+                        <button id = "auth-submit-btn" class = "auth-btn">ログイン</button>
+                    </div>
+                    <div class = "auth-switch">
+                        <span id = "auth-switch-text">アカウントをお持ちでないですか？</span>
+                        <a id = "auth-switch-link">新規登録</a>
+                    </div>
+                </div>
+            </section>
             
-            <section id="home-page">
+            <section id="home-page" class = "hidden">
                 <div id="card-area"></div>
                 
                 <button id="add-btn" style="cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">

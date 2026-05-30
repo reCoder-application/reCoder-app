@@ -50,6 +50,8 @@
     margin-top: 20px;
     font-size: 0.9rem;
     color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
 }
 .auth-switch a {
     color: var(--primary);
