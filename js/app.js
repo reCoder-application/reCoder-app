@@ -56,7 +56,7 @@ function resetForm() {
 
 function renderCard(log) {
     // 既存データとの互換性のため、beanNameがあればproductNameとして扱う
-    const displayName = log.productName || log.beanName || 'undefined';
+    const displayName = log.productName || log.beanName || 'N/A';
 
     const cardHtml = /*html*/`
         <div class="glass-card" data-id="${log.id}">
@@ -82,28 +82,28 @@ function renderCard(log) {
                     <div class="meta-info" style="margin-top: 4px;">
                         <span><i data-lucide="sprout"></i> ${log.variety}</span>
                         <span>/</span>
-                        <span><i data-lucide="droplets"></i> ${log.process || 'undefined'}</span>
+                        <span><i data-lucide="droplets"></i> ${log.process || 'N/A'}</span>
                     </div>
 
                     <!---プロセスと使ったドリッパー--->
                     <div class="meta-info" style="margin-top: 4px;">
-                        <span><i data-lucide="filter"></i> ${log.dripper || 'undefined'}</span>
+                        <span><i data-lucide="filter"></i> ${log.dripper || 'N/A'}</span>
                         <span>/</span>
-                        <span><i data-lucide = "notebook-text"></i> ${log.recipe || 'undefined'}</span>
+                        <span><i data-lucide = "notebook-text"></i> ${log.recipe || 'N/A'}</span>
                     </div>
 
                     <!---購入店--->
                     <div class="meta-info" style="margin-top: 4px;">
-                        <span><i data-lucide="shopping-bag"></i> ${log.shop || 'undefined'}</span>
+                        <span><i data-lucide="shopping-bag"></i> ${log.shop || 'N/A'}</span>
                     </div>
 
                     <div class = "meta-info" style = "margin-top: 4px;">
-                        <span><i data-lucide = "message-square"></i> ${log.aroma || 'undefined'}</span>
+                        <span><i data-lucide = "message-square"></i> ${log.aroma || 'N/A'}</span>
                     </div>
                 </div>
             </div>
 
-            <p class="notes"><i data-lucide="sticky-note"></i> ${log.note || 'undefined'}</p>
+            <p class="notes"><i data-lucide="sticky-note"></i> ${log.note || 'N/A'}</p>
             <div class = "chart-container">
                 <canvas id = "chart-${log.id}"></canvas>
             </div>
@@ -408,7 +408,7 @@ if (savedLogs) {
     // 既存データに isFavorite フィールドを追加（互換性処理）
     coffeeLogs = coffeeLogs.map(log => ({
         ...log,
-        isFavorite: log.isFavorite !== undefined ? log.isFavorite : false
+        isFavorite: log.isFavorite !== N/A ? log.isFavorite : false
     }));
     
     coffeeLogs.forEach(function(log) {
