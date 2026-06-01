@@ -11,3 +11,23 @@ const authSwitchText = document.getElementById('auth-switch-text');
 const authSwitchLink = document.getElementById('auth-switch-link');
 const authError = document.getElementById('auth-error');
 
+
+// 現在のユーザのモード（ログイン or 新規登録）
+let isLoginMode = true; 
+
+authSwitchLink.addEventListener('click', () => {
+    isLoginMode = !isLoginMode;
+    authError.style.display = 'none'; // エラーを消す
+
+    if (isLoginMode){
+        authSubmitBtn.textContent = 'ログイン';
+        authSwitchText.textContent = 'アカウントをお持ちでないですか?';
+        authSwitchLink.textContent = '新規登録'
+    } else {
+        authSubmitBtn.textContent = '登録して始める';
+        authSwitchText.textContent = 'すでにアカウントをお持ちですか?';
+        authSwitchLink.textContent = 'ログイン';
+    }
+});
+
+
