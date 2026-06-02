@@ -16,7 +16,7 @@ const authError = document.getElementById('auth-error');
 let isLoginMode = true; 
 
 authSwitchLink.addEventListener('click', () => {
-    isLoginMode = !isLoginMode;
+    isLoginMode = !isLoginMode; 
     authError.style.display = 'none'; // エラーを消す
 
     if (isLoginMode){
@@ -30,4 +30,22 @@ authSwitchLink.addEventListener('click', () => {
     }
 });
 
+//  ログイン / 新規登録ボタンを押したときの処理
+authSubmitBtn.addEventListener('click', async () => {
+    const email = authEmail.value;
+    const password = authPassword.value;
+
+    if (!email || !password){
+        showError('メールアドレスとパスワードを入力してください。');
+        return;
+    }
+
+    try {
+        if(isLoginMode){
+
+        }
+    } catch{
+
+    }
+})
 
