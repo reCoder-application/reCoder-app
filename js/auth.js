@@ -12,8 +12,8 @@ const authSwitchLink = document.getElementById('auth-switch-link');
 const authError = document.getElementById('auth-error');
 
 
-// 現在のユーザのモード（ログイン or 新規登録）
-let isLoginMode = true; 
+// 現在のユーザのモード（ログイン ⇔ 新規登録）
+let isLoginMode = true; // 
 
 authSwitchLink.addEventListener('click', () => {
     isLoginMode = !isLoginMode; 
@@ -42,10 +42,36 @@ authSubmitBtn.addEventListener('click', async () => {
 
     try {
         if(isLoginMode){
-
+            // ログイン処理
+            await firebase.auth().signInWithEmailAndPassword(email, password);
+        } else {
+            // 新規登録処理
+            await firebase.auth().createUserWithEmailAndPassword(email, password);
         }
-    } catch{
 
+        // 成功したら入力欄を空にする
+        authEmail.value = '';
+        authPassword.value = '';
+        authError.style.display = 'none';
+    } catch (error) {
+        console.error(error);
+        // firebaseのエラーメッセージを日本語に変換して表示する
+        if(error.code === 'auth/invalid-email') showError('メールアドレスが正しくありません。');
+        else if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') showError('メールアドレスかパスワードが間違っています。');
+        else if (error.code === 'auth/email-already-in-use') showError('このメールアドレスは既に登録されています。');
+        else if (error.code === 'auth/weak-password') showError('パスワードは6文字以上で入力してください。');
+        else showError('エラーが発生しました。もう一度お試しください。');
     }
-})
+});
 
+// ログアウトボタンを押したときの処理
+logoutBtn.addEventListener('click', () => {
+    firebase.auth().signOut();
+});
+
+
+// 各種エラーメッセージを表示する関数
+function showError(message) {
+    authError.textContent = message;
+    authError.style.display = 'block';
+}
