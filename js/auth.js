@@ -75,3 +75,27 @@ function showError(message) {
     authError.textContent = message;
     authError.style.display = 'block';
 }
+
+// ログイン状態の監視(firebaseが自動で呼び出してくれる)
+firebase.auth().ouAuthStateChanged((user) => {
+    if(user) {
+        // ログインしている時
+        console.log('ログインしました:', user.email);
+        authPage.classList.add('hidden');
+        homePage.classList.remove('hidden');
+        addBtn.classList.remove('hidden');
+        logoutBtn.style.display = 'block';
+
+        // todo: ここでfirestoreからデータを読み込む処理を呼ぶ
+    } else {
+        // ログアウトしている状態
+        console.log('ログアウトしています');
+        authPage.classList.remove('hidden');
+        homePage.classList.add('hidden');
+        addBtn.classList.add('hidden');
+        logoutBtn.style.display = 'none';
+
+        // 追加画面がもし開かれたままだったら、隠す
+        document.getElementById('add-page').classList.add('hidden');
+    }
+});
