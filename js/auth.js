@@ -77,7 +77,7 @@ function showError(message) {
 }
 
 // ログイン状態の監視(firebaseが自動で呼び出してくれる)
-firebase.auth().ouAuthStateChanged((user) => {
+firebase.auth().onAuthStateChanged((user) => {
     if(user) {
         // ログインしている時
         console.log('ログインしました:', user.email);
