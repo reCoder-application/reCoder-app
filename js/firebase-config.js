@@ -1,8 +1,3 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCkli9fpKnERt8IQwte-2I7iafcCIlx4pM",
@@ -13,5 +8,5 @@ const firebaseConfig = {
   appId: "1:1064599488965:web:2d3dd56a6ea47c5fd0e3ac"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Firebaseを初期化する（compat版のグローバル firebase を使う）
+firebase.initializeApp(firebaseConfig);
