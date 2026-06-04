@@ -1,9 +1,7 @@
 const cardArea = document.getElementById('card-area');
 const saveBtn = document.getElementById('btn-save');
-const addBtn = document.getElementById('add-btn');
 const cancelBtn = document.getElementById('btn-cancel');
 const editBtn = document.getElementById('edit-btn');
-const homePage = document.getElementById('home-page');
 const addPage = document.getElementById('add-page');
 const slidersIds = ['acidity', 'bitterness', 'richness', 'sweetness', 'aromaStrength'];
 
@@ -17,7 +15,7 @@ let editingId = null;
 function switchPage(pageName) {
     if (pageName === 'add') {
         homePage.classList.add('hidden');
-        addPage.classList.remove('hidden');
+        addPage.classList.remove('hidden'); 
     } else {
         addPage.classList.add('hidden');
         homePage.classList.remove('hidden');
@@ -192,7 +190,7 @@ function initChart(id, flavor) {
         }
     });
     lucide.createIcons();
-};
+}
 
 
 // データ処理関数
@@ -200,13 +198,14 @@ function initChart(id, flavor) {
 // LocalStorageへの保存処理
 function syncStorage() {
     localStorage.setItem('coffeeLogs', JSON.stringify(coffeeLogs));
-};
+}
 
 
 // イベントリスナー群
 
 // 追加ボタン：新規入力画面へ遷移
 addBtn.addEventListener('click', function() {
+    console.log('新規入力画面への遷移ボタンが押されました');
     switchPage('add');
     resetForm();
     editingId = null;
@@ -297,7 +296,6 @@ saveBtn.addEventListener('click', function() {
         coffeeLogs.push(log);
     }
 
-    // LocalStorageに保存
     syncStorage();
     renderCard(log);
     resetForm();
@@ -408,7 +406,7 @@ if (savedLogs) {
     // 既存データに isFavorite フィールドを追加（互換性処理）
     coffeeLogs = coffeeLogs.map(log => ({
         ...log,
-        isFavorite: log.isFavorite !== N/A ? log.isFavorite : false
+        isFavorite: log.isFavorite !== undefined ? log.isFavorite : false
     }));
     
     coffeeLogs.forEach(function(log) {

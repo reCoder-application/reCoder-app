@@ -85,7 +85,7 @@ firebase.auth().onAuthStateChanged((user) => {
         homePage.classList.remove('hidden');
         addBtn.classList.remove('hidden');
         logoutBtn.style.display = 'block';
-
+        // 各ページのclassListの変更は正しくできているが、addBtnを押しても画面遷移しない
         // todo: ここでfirestoreからデータを読み込む処理を呼ぶ
     } else {
         // ログアウトしている状態
