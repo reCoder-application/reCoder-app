@@ -52,3 +52,6 @@ async function toggleFavorite(id, isFavorite) {
     if (!logsRef) return;
     await logsRef.doc(id).update({ isFavorite: isFavorite });
 };
+
+
+

@@ -312,12 +312,12 @@ cardArea.addEventListener('click', function(e) {
     const editBtn = e.target.closest('.edit-btn');
 
     if (favoriteBtn) {
-        const favoriteId = Number(favoriteBtn.dataset.id); //dataset.idはhtml要素のdata-id属性の値を取得
+        const favoriteId = favoriteBtn.dataset.id; //dataset.idはhtml要素のdata-id属性の値を取得
         const targetLog = coffeeLogs.find(log => log.id === favoriteId);
 
         if (targetLog) {
             targetLog.isFavorite = !targetLog.isFavorite;
-            syncStorage();
+            await toggleFavorite(targetLog.id, targetLog.isFavorite); 
             
             // ボタンの表示を更新
             const buttonTextSpan = favoriteBtn.querySelector('span');
@@ -342,15 +342,14 @@ cardArea.addEventListener('click', function(e) {
 
     // 削除ボタンの処理
     else if (deleteBtn) {
-        const deleteId = Number(deleteBtn.dataset.id);
+        const deleteId = deleteBtn.dataset.id;
         
         openModal(
             "削除の確認",
             "本当に削除しますか？",
             function() {
                 coffeeLogs = coffeeLogs.filter(log => log.id !== deleteId);
-                syncStorage();
-                
+                await deleteLog(deleteId);
                 const cardToDelete = document.querySelector(`[data-id="${deleteId}"]`).closest('.glass-card');
                 cardToDelete.remove();
             }
@@ -359,7 +358,7 @@ cardArea.addEventListener('click', function(e) {
 
     // 編集ボタンの処理
     else if (editBtn) {
-        const targetId = Number(editBtn.dataset.id);
+        const targetId = editBtn.dataset.id;
         const targetLog = coffeeLogs.find(log => log.id === targetId);
         if (!targetLog) {
             return;
@@ -398,18 +397,9 @@ cardArea.addEventListener('click', function(e) {
 // 5. 初期化処理
 // ========================================
 
-// ページ読み込み時にLocalStorageからデータを復元
-const savedLogs = localStorage.getItem('coffeeLogs');
-if (savedLogs) {
-    coffeeLogs = JSON.parse(savedLogs);
-    
-    // 既存データに isFavorite フィールドを追加（互換性処理）
-    coffeeLogs = coffeeLogs.map(log => ({
-        ...log,
-        isFavorite: log.isFavorite !== undefined ? log.isFavorite : false
-    }));
-    
-    coffeeLogs.forEach(function(log) {
-        renderCard(log);
-    });
+// ログイン後に呼ばれる： Firestoreからデータを読み込んで表示する
+async function initApp() {
+    cardArea.innerHTML = '';          // 一旦カードを全部消す
+    coffeeLogs = await loadLogs();    // Firestoreから読み込む
+    coffeeLogs.forEach(renderCard);
 }
