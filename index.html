@@ -21,10 +21,12 @@
         <!--レーダーチャートを作る用。ライブラリ名は"chart.js"-->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         
-        <link rel="stylesheet" href="styles/main.css">
-        <link rel="stylesheet" href ="styles/modal.css">
-        <link rel="stylesheet" href = "styles/responsive.css">
-        <link rel="stylesheet" href = "styles/auth.css">
+        <!-- ?v=1 はキャッシュ対策(キャッシュバスティング)。-->
+        <!-- ファイルの中身を更新したら v の数字を増やすと、ブラウザが「新しいファイル」と判断して読み直す。-->
+        <link rel="stylesheet" href="styles/main.css?v=1">
+        <link rel="stylesheet" href ="styles/modal.css?v=1">
+        <link rel="stylesheet" href = "styles/responsive.css?v=1">
+        <link rel="stylesheet" href = "styles/auth.css?v=1">
     </head>
     <body>
     <div id="app">
@@ -174,20 +176,23 @@
         </div>
     </div>
 
-    <script src="js/modal.js"></script>
+    <!-- 自分で書いたJSには ?v=1 を付ける(キャッシュ対策)。-->
+    <!-- 中身を更新したら v の数字を増やすと、ブラウザが古いコードを使わず読み直す。-->
+    <script src="js/modal.js?v=1"></script>
 
      <!-- Firebase SDK -->
     <!-- Firebaseの機能を使うためのライブラリをgoogleのサーバーからダウンロード-->>
+    <!-- CDN(外部配信)のファイルはURLにバージョンが含まれるので ?v= は不要 -->
      <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
      <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
      <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <!-- Firebase設定とAPI -->
-    <script src="js/firebase-config.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/api.js"></script>
+    <script src="js/firebase-config.js?v=1"></script>
+    <script src="js/auth.js?v=1"></script>
+    <script src="js/api.js?v=1"></script>
 
-    <script src="js/app.js"></script>
+    <script src="js/app.js?v=1"></script>
 
     
     
