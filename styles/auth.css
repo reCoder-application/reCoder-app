@@ -1,12 +1,4 @@
-:root {
-    --bg-dark: #ffffff;
-    /*黒なら#121212*/
-    --primary: #00ce82;
-    --glass-bg: rgba(255,255,255,0.05); /*半透明の白*/
-    --text-main: #ffffff;
-    --text-muted: #a0a0a0;
-    --glass-border: #a0a0a0;
-}
+/* 色の定義(:root)は main.css に一本化したため、ここでは再定義しない */
 
 .auth-container {
     max-width: 400px;
@@ -43,7 +35,7 @@
     margin-top: 8px;
 }
 .auth-btn:hover {
-    background: #00b371;
+    background: var(--primary-dark);
 }
 
 .auth-switch {

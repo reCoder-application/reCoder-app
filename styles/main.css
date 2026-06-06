@@ -1,23 +1,26 @@
 /*--変数定義--*/
+/* サイト全体の配色をここで一括管理する（コーヒーをイメージした上品なダークテーマ）*/
 :root {
-    --bg-dark: #000000;
-    /*黒なら#121212*/
-    --primary: #00ce82;
-    --glass-bg: rgba(255,255,255,0.05); /*半透明の白*/
-    --text-main: #000000;
-    --text-muted: #a0a0a0;
-    --glass-border: #a0a0a0;
+    --bg-dark: #17120e;          /* 深煎りエスプレッソのような濃い茶系の黒 */
+    --bg-accent: #2a1f17;        /* 背景グラデーション用の少し明るい茶 */
+    --primary: #d4a373;          /* アクセント色：温かみのあるキャラメル/ラテ色 */
+    --primary-dark: #b9854f;     /* ホバー時などに使う濃いキャラメル */
+    --glass-bg: rgba(255, 255, 255, 0.05); /*半透明の白（すりガラス用）*/
+    --text-main: #f3ece3;        /* 文字色：生成り(きなり)色の白 */
+    --text-muted: #a99d8e;       /* 補助テキスト用のくすんだベージュ */
+    --glass-border: rgba(255, 255, 255, 0.12); /* 半透明の細い枠線 */
 }
 
 body {
     background-color: var(--bg-dark);
-    color: var(--text-main); /*文字は白色*/
-    font-family: 'Outfit' sans-serif; /*読み込んでフォントを使う。'Outfit'はフォントファミリー。sans-serif(ゴシック体)*/
+    color: var(--text-main);
+    font-family: 'Outfit', sans-serif; /*読み込んでフォントを使う。'Outfit'はフォントファミリー。sans-serif(ゴシック体)*/
     text-align: center;
     margin: 0;
     /*背景にうっすらグラデーションを入れてリッチにする*/
+    /*background-color ではグラデーションは効かないので background-image を使う*/
     /*radial-gradient(形状や中心位置,開始色,終了色):円形グラデーション*/
-    background-color: radial-gradient(circle at top right, #2a2a2a 0%, #121212 100%);
+    background-image: radial-gradient(circle at top right, var(--bg-accent) 0%, var(--bg-dark) 60%);
     min-height: 100vh;    
 }
 
@@ -185,9 +188,9 @@ h3 {
     border-radius: 50%;
     border: none;
     background-color: var(--primary);
-    color: white;
+    color: #2a1f17;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+    box-shadow: 0 4px 20px rgba(212, 163, 115, 0.45);
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
