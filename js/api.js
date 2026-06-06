@@ -1,7 +1,7 @@
 function getLogsCollection() {
-    const user = firebase.ayth().currentUser;
+    const user = firebase.auth().currentUser;
     if (!user) return null;
-    return firebase.firebase()
+    return firebase.firestore()
      .collection('users')
      .doc(user.uid) // uid = ユーザ識別用固有ID
      .collection('logs'); 
@@ -18,7 +18,7 @@ async function loadLogs() {
     const snapshot = await logsRef.orderBy('createdAt').get(); // snapshot: ...get()で帰ってくる取得結果の塊。その中の.docsで1件ずつ取り出せる
 
     // snapshot.docs = 取得した全ドキュメント。1件ずつ扱いやすい形に変換する
-    const snapshot.docs.map(doc => ({
+    return snapshot.docs.map(doc => ({
         id: doc.id, // ドキュメントID(文字列)をidとして持たせる
         ...doc.data() // 中身を展開する
     }));
@@ -27,20 +27,20 @@ async function loadLogs() {
 // 新しいログを保存する(保存後、firestoreが作ったIDを返す)
 async function saveLog(log) {
     const logsRef = getLogsCollection();
-    if (!loadLogs) return null;
+    if (!logsRef) return null;
     const docRef = await logsRef.add(log); //add = 新規追加(IDは自動生成)
     return docRef.id;
 };
 
 // 既存のログを更新する
-async function updateLog(Log) {
+async function updateLog(id, log) {
     const logsRef = getLogsCollection();
     if (!logsRef) return ;
     await logsRef.doc(id).update(log); // doc(id)で1件を指定してupdateする
 };
 
 // ログを削除する
-async function deleteLog(Log) {
+async function deleteLog(id) {
     const logsRef = getLogsCollection();
     if(!logsRef) return;
     await logsRef.doc(id).delete();
@@ -52,6 +52,3 @@ async function toggleFavorite(id, isFavorite) {
     if (!logsRef) return;
     await logsRef.doc(id).update({ isFavorite: isFavorite });
 };
-
-
-

@@ -66,7 +66,7 @@ function renderCard(log) {
                     
                     <!---購入日--->
                     <div class = "meta-info">
-                        <span><i data-lucide = "calendar"></i> ${logDate(log.id)}</span>
+                        <span><i data-lucide = "calendar"></i> ${logDate(log.createdAt)}</span>
                     </div>
 
                     <!---生産国および農園--->
@@ -193,14 +193,6 @@ function initChart(id, flavor) {
 }
 
 
-// データ処理関数
-
-// LocalStorageへの保存処理
-function syncStorage() {
-    localStorage.setItem('coffeeLogs', JSON.stringify(coffeeLogs));
-}
-
-
 // イベントリスナー群
 
 // 追加ボタン：新規入力画面へ遷移
@@ -229,7 +221,7 @@ slidersIds.forEach(function(id) {
 });
 
 // 保存ボタン：データの追加・更新処理
-saveBtn.addEventListener('click', function() {
+saveBtn.addEventListener('click', async function() {
     // HTMLから値を取得
     const productName = document.getElementById('product-name').value;
     const country = document.getElementById('country').value;
@@ -257,7 +249,7 @@ saveBtn.addEventListener('click', function() {
 
     // 1件分の記録データを作成
     const log = {
-        id: Date.now(),
+        createdAt: Date.now(),
         productName: productName,
         country: country,
         farm: farm,
@@ -284,7 +276,9 @@ saveBtn.addEventListener('click', function() {
         const index = coffeeLogs.findIndex(log => log.id === editingId);
         log.id = editingId;
         log.isFavorite = coffeeLogs[index].isFavorite;
+        log.createdAt = coffeeLogs[index].createdAt; // 作成日を引き継ぐ
         coffeeLogs[index] = log;
+        await updateLog(editingId, log); // Firestoreを更新
 
         const oldCard = document.querySelector(`[data-id="${editingId}"]`).closest('.glass-card');
         if (oldCard) {
@@ -293,10 +287,11 @@ saveBtn.addEventListener('click', function() {
         editingId = null;
     } else {
         // 新規追加モード
+        const newId = await saveLog(log); // Firestoreに保存してIDをもらう
+        log.id = newId;
         coffeeLogs.push(log);
     }
 
-    syncStorage();
     renderCard(log);
     resetForm();
     switchPage('home');
@@ -305,7 +300,7 @@ saveBtn.addEventListener('click', function() {
 
 
 // カードエリアのイベント委譲（削除、いいね、編集）
-cardArea.addEventListener('click', function(e) {
+cardArea.addEventListener('click', async function(e) {
     // イベントが発生したhtml要素の最も近い親要素を取得
     const deleteBtn = e.target.closest('.delete-btn');
     const favoriteBtn = e.target.closest('.favorite-btn');
@@ -347,7 +342,7 @@ cardArea.addEventListener('click', function(e) {
         openModal(
             "削除の確認",
             "本当に削除しますか？",
-            function() {
+            async function() {
                 coffeeLogs = coffeeLogs.filter(log => log.id !== deleteId);
                 await deleteLog(deleteId);
                 const cardToDelete = document.querySelector(`[data-id="${deleteId}"]`).closest('.glass-card');

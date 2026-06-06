@@ -86,7 +86,7 @@ firebase.auth().onAuthStateChanged((user) => {
         addBtn.classList.remove('hidden');
         logoutBtn.style.display = 'block';
         // 各ページのclassListの変更は正しくできているが、addBtnを押しても画面遷移しない
-        // todo: ここでfirestoreからデータを読み込む処理を呼ぶ
+        initApp();
     } else {
         // ログアウトしている状態
         console.log('ログアウトしています');
@@ -94,6 +94,10 @@ firebase.auth().onAuthStateChanged((user) => {
         homePage.classList.add('hidden');
         addBtn.classList.add('hidden');
         logoutBtn.style.display = 'none';
+
+        // 前のユーザーのカードが残らないように消す
+        coffeeLogs = [];
+        cardArea.innerHTML = '';
 
         // 追加画面がもし開かれたままだったら、隠す
         document.getElementById('add-page').classList.add('hidden');
