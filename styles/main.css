@@ -32,6 +32,11 @@ body {
     text-align: left; /*ラベルを左寄せにする*/
 }
 
+.font-english {
+    font-family: 'Philosopher', sans-serif;
+    font-weight: normal;
+}
+
 input[type = "text"],
 input[type = "range"] {
     background: rgba(255,255,255,0.05);
