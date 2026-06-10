@@ -131,11 +131,11 @@ function renderCard(log) {
     initChart(log.id, log.flavor);
 }
 
-// レーダーチャートの初期化処理
+// 棒グラフ(ヒストグラム)の初期化処理
 function initChart(id, flavor) {
     const ctx = document.getElementById(`chart-${id}`).getContext('2d');
     new Chart(ctx, {
-        type: 'radar',
+        type: 'bar', // bar = 棒グラフ
         data: {
             labels: ['Acidity', 'Bitterness', 'Body', 'Sweetness', 'Aroma'],
             datasets: [
@@ -148,10 +148,10 @@ function initChart(id, flavor) {
                         flavor.sweetness,
                         flavor.aromaStrength
                     ],
-                    backgroundColor: 'rgba(153, 208, 144, 0.2)',
-                    borderColor: 'rgb(168, 216, 181)',
-                    borderWidth: 2,
-                    pointBackgroundColor: 'white'
+                    backgroundColor: 'rgba(212, 163, 115, 0.6)', // キャラメル色(半透明)
+                    borderColor: '#d4a373',
+                    borderWidth: 1,
+                    borderRadius: 4 // 棒の角を少し丸める
                 }
             ],
         },
@@ -159,26 +159,25 @@ function initChart(id, flavor) {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                r: {
+                // 縦軸(y)：味の強さ 0〜5
+                y: {
                     min: 0,
                     max: 5,
                     ticks: {
                         stepSize: 1,
-                        color: '#a0a0a0',
-                        backdropColor: 'transparent',
-                        display: false
+                        color: '#a99d8e'
                     },
                     grid: {
                         color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                },
+                // 横軸(x)：味の項目名
+                x: {
+                    ticks: {
+                        color: '#f3ece3'
                     },
-                    pointLabels: {
-                        color: '#ffffff',
-                        font: {
-                            size: 12
-                        }
-                    },
-                    angleLines: {
-                        color: 'rgba(255, 255, 255, 0.1)'
+                    grid: {
+                        display: false // 縦線は消してすっきりさせる
                     }
                 }
             },
