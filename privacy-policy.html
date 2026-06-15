@@ -54,8 +54,8 @@
                 ・利用目的：アカウント管理およびデータの保管<br>
                 ・送信される情報：メールアドレス、パスワード、コーヒーの記録データ<br>
                 ・詳細：パスワードは暗号化(ハッシュ化)されて保存され、運営者を含む第三者が元のパスワードを知ることはできません。<br>
-                ・Googleのプライバシーポリシー：<a href = "https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google privacy policy</a><br>
-                ・Firebaseのプライバシーポリシー：<a href = "https://firebase.google.com/support/privacy" target="_blank" rel = "noopener noreferrer">Privacy and Security in Firebase</a>
+                ・Google： <a href = "https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google privacy policy</a><br>
+                ・Firebase: <a href = "https://firebase.google.com/support/privacy" target="_blank" rel = "noopener noreferrer">Privacy and Security in Firebase</a>
             </li>
         </ul>
         <p>当サービスは、法令に基づく場合を除き、ユーザーの同意なく上記以外の第三者に個人情報を提供致しません。</p>
@@ -63,11 +63,14 @@
         <h3>4.データの保存先</h3>
         <p>ユーザのメールアドレス、パスワード、保存したデータは、Google LLCが提供するクラウドサービス「Firebase」内のデータベース[Firestore」に保管しています。</p>
 
-        <h3>5.セキュリティに関して</h3>
+        <h3>5.安全管理措置</h3>
         <p>当サービスはユーザの個人情報の漏洩・滅失・毀損を防ぐために以下の対策を講じています。</p>
         <ul>
-            <li>通信経路の暗号化(HTTPS/TLS)</li>
-            <li>サーバーサイドでのパスワードのハッシュ化</li>
+            <li>利用者とサーバー間の通信は常に暗号化（TLS/HTTPS）されており、またサーバー上に保存されるデータもすべて暗号化された状態で厳重に保管されています。</li>
+            <li>パスワードはアルゴリズム（scrypt等）を用いてハッシュ化された状態でFirebase上に保存され、運営者を含む第三者が元のパスワードを知ることはできません。</li>
         </ul>
+
+        <h3>6. プライバシーポリシーの改定について</h3>
+        <p>本ポリシーの内容は、法令その他本ポリシーに格段の定めのある事項を除き、ユーザーに予告・通知をすることなく変更できるものとします。</p>
     </body>
 </html>
