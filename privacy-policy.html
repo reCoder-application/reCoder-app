@@ -12,65 +12,82 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
-        <link rel = "stylesheet" href = "../styles/privacy-policy.css">
-        <link rel="stylesheet" href="styles/main.css?v=2">
+       
+        <link rel="stylesheet" href="styles/privacy-policy.css">
+        
     </head>
     <body>
-        <header class="glass-header">
-            <div class="logo">
-                <span>reCoder</span>
-            </div>
-            <button id = "logout-btn">ログアウト</button>
-        </header>
-
-        <h1>プライバシーポリシー</h1>
-        <p>制定日 ----年--月--日</p>
-        <p>最終更新日 ----年--月--日</p>
-        <p>本サービス「reCoder」(以下、「当サービス」といいます。)の運営者(以下、「運営者」といいます。)は、ユーザーの個人情報の取り扱いについて、以下の通りプライバシーポリシー(以下、「本ポリシー」といいます。)を定めます。</p>
-        <h3>1. 収集する情報</h3>
-        <p>本サービスでは、以下の情報を取得します。</p>
-
-        <ul>
-            <li class = "text-left">
-                <strong>ユーザが入力する情報</strong>
-            :メールアドレス、ログイン時のパスワード(ハッシュ化してサーバに保存)、コーヒーの記録データ。
-            </li>
-        </ul>
-
-        <h3>2.利用目的</h3>
-        <p>当サービスが情報を収集・利用する目的は、以下の通りです。</p>
-        <ul>
-            <li>当サービスの提供・運営のため</li>
-            <li>アカウントの作成・管理及びログイン認証</li>
-            <li>ユーザが記録したコーヒー情報の保存・管理</li>
-            <li>記録データをサーバから取り出し、表示するため</li>
-        </ul>
-
-        <h3>3.取得した情報の第三者提供・外部サービスの利用</h3>
-        <p>当サービスは、データの安全な保管と認証機能の提供のため、Google LLCが提供するクラウドサービス「Firebase」を利用しています。</p>
-        <ul>
-            <li>
-                <strong>Google Firebase</strong><br>
-                ・利用目的：アカウント管理およびデータの保管<br>
-                ・送信される情報：メールアドレス、パスワード、コーヒーの記録データ<br>
-                ・詳細：パスワードは暗号化(ハッシュ化)されて保存され、運営者を含む第三者が元のパスワードを知ることはできません。<br>
-                ・Google： <a href = "https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google privacy policy</a><br>
-                ・Firebase: <a href = "https://firebase.google.com/support/privacy" target="_blank" rel = "noopener noreferrer">Privacy and Security in Firebase</a>
-            </li>
-        </ul>
-        <p>当サービスは、法令に基づく場合を除き、ユーザーの同意なく上記以外の第三者に個人情報を提供致しません。</p>
-        
-        <h3>4.データの保存先</h3>
-        <p>ユーザのメールアドレス、パスワード、保存したデータは、Google LLCが提供するクラウドサービス「Firebase」内のデータベース[Firestore」に保管しています。</p>
-
-        <h3>5.安全管理措置</h3>
-        <p>当サービスはユーザの個人情報の漏洩・滅失・毀損を防ぐために以下の対策を講じています。</p>
-        <ul>
-            <li>利用者とサーバー間の通信は常に暗号化（TLS/HTTPS）されており、またサーバー上に保存されるデータもすべて暗号化された状態で厳重に保管されています。</li>
-            <li>パスワードはアルゴリズム（scrypt等）を用いてハッシュ化された状態でFirebase上に保存され、運営者を含む第三者が元のパスワードを知ることはできません。</li>
-        </ul>
-
-        <h3>6. プライバシーポリシーの改定について</h3>
-        <p>本ポリシーの内容は、法令その他本ポリシーに格段の定めのある事項を除き、ユーザーに予告・通知をすることなく変更できるものとします。</p>
+        <div id = "privacy-policy">
+            <header class="glass-header">
+                <div class="logo">
+                    <span>reCoder</span>
+                </div>
+                <button id = "logout-btn">ログアウト</button>
+            </header>
+    
+            <h1>プライバシーポリシー</h1>
+            <p>制定日 ----年--月--日</p>
+            <p>最終更新日 ----年--月--日</p>
+            <p>本サービス「reCoder」(以下、「当サービス」といいます。)の運営者(以下、「運営者」といいます。)は、ユーザーの個人情報の取り扱いについて、以下の通りプライバシーポリシー(以下、「本ポリシー」といいます。)を定めます。</p>
+            <h3>1. 収集する情報</h3>
+            <p>本サービスでは、以下の情報を取得します。</p>
+    
+            <ul>
+                <li>
+                    <strong>ユーザが入力する情報</strong>: 
+                    メールアドレス、ログイン時のパスワード(ハッシュ化してサーバに保存)、コーヒーの記録データ。
+                </li>
+                <li>
+                    <strong>自動的に取得される情報</strong>: 
+                    ログイン認証に必要な各種識別子(Firebase Authによって管理されるUIDなど)
+                </li>
+            </ul>
+    
+            <h3>2.利用目的</h3>
+            <p>当サービスが情報を収集・利用する目的は、以下の通りです。</p>
+            <ul>
+                <li>当サービスの提供・運営のため</li>
+                <li>アカウントの作成・管理及びログイン認証</li>
+                <li>ユーザが記録したコーヒー情報の保存・管理</li>
+                <li>記録データをサーバから取り出し、表示するため</li>
+            </ul>
+    
+            <h3>3.取得した情報の第三者提供・外部サービスの利用</h3>
+            <p>当サービスは、データの安全な保管と認証機能の提供のため、Google LLCが提供するクラウドサービス「Firebase」を利用しています。</p>
+            <ul>
+                <li>
+                    <strong>Google Firebase</strong><br>
+                    ・利用目的：アカウント管理およびデータの保管<br>
+                    ・送信される情報：メールアドレス、パスワード、コーヒーの記録データ<br>
+                    ・詳細：パスワードは暗号化(ハッシュ化)されて保存され、運営者を含む第三者が元のパスワードを知ることはできません。<br>
+                    ・Google： <a href = "https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google privacy policy</a><br>
+                    ・Firebase: <a href = "https://firebase.google.com/support/privacy" target="_blank" rel = "noopener noreferrer">Privacy and Security in Firebase</a>
+                </li>
+            </ul>
+            <p>当サービスは、法令に基づく場合を除き、ユーザーの同意なく上記以外の第三者に個人情報を提供致しません。</p>
+            
+            <h3>4.データの保存先</h3>
+            <p>ユーザのメールアドレス、パスワード、保存したデータは、Google LLCが提供するクラウドサービス「Firebase」内のデータベース[Firestore」に保管しています。</p>
+    
+            <h3>5.安全管理措置</h3>
+            <p>当サービスはユーザの個人情報の漏洩・滅失・毀損を防ぐために以下の対策を講じています。</p>
+            <ul>
+                <li>利用者とサーバー間の通信は常に暗号化（TLS/HTTPS）されており、またサーバー上に保存されるデータもすべて暗号化された状態で厳重に保管されています。</li>
+                <li>パスワードはアルゴリズム（scrypt等）を用いてハッシュ化された状態でFirebase上に保存され、運営者を含む第三者が元のパスワードを知ることはできません。</li>
+            </ul>
+    
+            <h3>6. データの管理・削除方法</h3>
+            <p>ユーザーは、本サービス内で記録したコーヒーのデータを自由に編集または削除することができます。アカウント自体の削除をご希望の場合、またはご自身のデータについてのお問い合わせは、下記の「お問い合わせ窓口」までご連絡ください。</p>
+    
+            <h3>7. プライバシーポリシーの改定について</h3>
+            <p>本ポリシーの内容は、法令その他本ポリシーに格段の定めのある事項を除き、ユーザーに予告・通知をすることなく適宜見直し、改善できるものとします。変更後のプライバシーポリシーは、本サービス内に掲載したときから効力を生じるものとします。</p>
+    
+            <h3>8. お問い合わせ窓口</h3>
+            <p>本ポリシーに関するお問い合わせ、または個人情報の取り扱いに関するご質問は、下記の窓口までお願いいたします。</p>
+            <p>
+                運営者: [運営者名]<br>
+                Email: [連絡先メールアドレス]
+            </p>
+        </div>
     </body>
 </html>

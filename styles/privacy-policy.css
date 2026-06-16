@@ -1,4 +1,80 @@
 @charset "UTF-8";
+:root {
+    --bg-dark: #17120e;          /* 深煎りエスプレッソのような濃い茶系の黒 */
+    --bg-accent: #2a1f17;        /* 背景グラデーション用の少し明るい茶 */
+    --primary: #d4a373;          /* アクセント色：温かみのあるキャラメル/ラテ色 */
+    --primary-dark: #b9854f;     /* ホバー時などに使う濃いキャラメル */
+    --glass-bg: rgba(255, 255, 255, 0.05); /*半透明の白（すりガラス用）*/
+    --text-main: #f3ece3;        /* 文字色：生成り(きなり)色の白 */
+    --text-muted: #a99d8e;       /* 補助テキスト用のくすんだベージュ */
+    --glass-border: rgba(255, 255, 255, 0.12); /* 半透明の細い枠線 */
+}
+
+
+body {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 100px 20px 40px; /* headerの高さ分だけ上部に余白を設ける */
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    background-color: var(--bg-dark);
+}
+
+.glass-header {
+    display: flex;
+    align-items: center; /*要素位置*/
+    justify-content: center;
+    padding: 16px 24px;
+    font-family: 'Outfit', sans-serif;
+    background: rgba(18, 18, 18, 0.8); /*少し透ける黒*/
+    backdrop-filter: blur(10px); /*すりガラス効果*/
+    border-bottom: 1px solid var(--glass-border);
+    position: fixed; /* 画面（ビューポート）基準で固定し、bodyの余白や横幅制限の影響を受けないようにする */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #b9854f;
+}
+
+h3 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
+    color: #b9854f;
+}
+
+p {
+    margin-bottom: 15px;
+    color: var(--text-main);
+    text-align: left;
+}
+
+ul {
+    padding-left: 25px; /* 左側のパディングを調整して点とテキストの距離を狭める */
+    margin-bottom: 20px;
+}
+
+li {
+    margin-bottom: 8px;
+    text-align: left;
+    color: var(--text-main);
+}
+
+/* 点とテキストの距離をさらに縮めたい場合は、list-style-positionを使用 */
+ul.compact-list {
+    list-style-position: inside;
+    padding-left: 10px;
+}
 
 .text-left {
     text-align: left;
