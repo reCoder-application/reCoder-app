@@ -61,7 +61,6 @@
 }
 /* ヘッダーのログアウトボタン用 */
 #logout-btn {
-    margin-left: auto;
     background: none;
     border: 1px solid var(--glass-border);
     color: var(--text-muted);

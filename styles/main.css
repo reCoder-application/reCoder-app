@@ -66,8 +66,8 @@ input[type = "text"]:focus {
 /*---ヘッダー---*/
 .glass-header {
     display: flex;
+    justify-content: space-between;
     align-items: center; /*要素位置*/
-    justify-content: center;
     padding: 16px 24px;
     font-family: 'Outfit', sans-serif;
     background: rgba(18, 18, 18, 0.8); /*少し透ける黒*/
