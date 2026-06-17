@@ -21,6 +21,12 @@
 
         <!--レーダーチャートを作る用。ライブラリ名は"chart.js"-->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <!--jQueryの読み込み-->
+        <script
+        src="https://code.jquery.com/jquery-4.0.0.min.js"
+        integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao="
+        crossorigin="anonymous"></script>
         
         <!-- ?v=1 はキャッシュ対策(キャッシュバスティング)。-->
         <!-- ファイルの中身を更新したら v の数字を増やすと、ブラウザが「新しいファイル」と判断して読み直す。-->
@@ -32,9 +38,16 @@
     <body>
     <div id="app">
         <header class="glass-header">
-            <button class = "action-btn menu-btn">
-                <i data-lucide="menu"></i>
-            </button>
+            <!-- 【追加】開閉メニュー：メニューボタンを押すと下のボックスがjQueryで開閉する -->
+            <div class = "submenu">
+                <button class = "action-btn menu-btn" id = "menu-box">
+                    <i data-lucide="menu"></i>
+                </button>
+                <!-- 【追加】開閉するボックス本体。初期は display:none で閉じておく -->
+                <div class = "submenu-content" id = "submenu-content" style = "display: none;">
+                    <a href = "privacy-policy.html" class = "submenu-item">プライバシーポリシー</a>
+                </div>
+            </div>
             <div class="logo">
                 <span>reCoder</span>
             </div>
@@ -182,7 +195,8 @@
 
     <!-- 自分で書いたJSには ?v=1 を付ける(キャッシュ対策)。-->
     <!-- 中身を更新したら v の数字を増やすと、ブラウザが古いコードを使わず読み直す。-->
-    <script src="js/modal.js?v=1"></script>
+    <!-- 【修正】閉じタグが </scrip> になっていたため、以降のFirebase読み込みが壊れてログイン不可になっていた。</script> に修正 -->
+    <script src="js/modal.js?v=2"></script>
 
      <!-- Firebase SDK -->
     <!-- Firebaseの機能を使うためのライブラリをgoogleのサーバーからダウンロード-->
@@ -192,11 +206,14 @@
      <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <!-- Firebase設定とAPI -->
-    <script src="js/firebase-config.js?v=1"></script>
-    <script src="js/auth.js?v=1"></script>
-    <script src="js/api.js?v=1"></script>
+    <script src="js/firebase-config.js?v=2"></script>
+    <script src="js/auth.js?v=2"></script>
+    <script src="js/api.js?v=2"></script>
 
-    <script src="js/app.js?v=1"></script>
+    <script src="js/app.js?v=2"></script>
+
+    <!-- 【追加】ヘッダーの開閉メニュー用(jQueryアニメーション) -->
+    <script src="js/menu.js?v=2"></script>
 
     
     

@@ -3,6 +3,7 @@ const saveBtn = document.getElementById('btn-save');
 const cancelBtn = document.getElementById('btn-cancel');
 const editBtn = document.getElementById('edit-btn');
 const addPage = document.getElementById('add-page');
+const menuBox = document.getElementById('menu-box');
 const slidersIds = ['acidity', 'bitterness', 'richness', 'sweetness', 'aromaStrength'];
 
 // コーヒーの記録を保存するためのリスト
@@ -21,6 +22,12 @@ function switchPage(pageName) {
         homePage.classList.remove('hidden');
     }
 }
+
+$(document).ready(function() {
+    $('.submenu').on('click', function() {
+        $(this).next().toggleClass('hidden');
+    })
+})
 
 function logDate(timestamp) {
     const now = new Date(timestamp); // タイムスタンプから日付を取得
