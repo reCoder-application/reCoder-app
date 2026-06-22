@@ -113,8 +113,27 @@
             </p>
         </div>
 
+        <!-- Firebase SDK（このページはログアウトだけ使うので、本体と認証の2つだけでよい） -->
+        <!-- CDN(外部配信)のファイルはURLにバージョンが含まれるので ?v= は不要 -->
+        <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+        <!-- Firebaseの初期化設定 -->
+        <script src="js/firebase-config.js?v=2"></script>
+
         <!-- メニュー開閉用のJS -->
         <script src="js/menu.js?v=1"></script>
+
+        <!-- このページ専用のログアウト処理 -->
+        <!-- 注意: home用の auth.js は home画面専用の要素を参照しており、このページで読むとエラーになるため使わない -->
+        <script>
+            document.getElementById('logout-btn').addEventListener('click', function () {
+                firebase.auth().signOut().then(function () {
+                    // ログアウトしたらホーム（ログイン画面）へ戻す
+                    window.location.href = 'index.html';
+                });
+            });
+        </script>
 
         <!-- アイコンの描画 -->
         <script>
