@@ -32,7 +32,7 @@
         
         <!-- ?v=1 はキャッシュ対策(キャッシュバスティング)。-->
         <!-- ファイルの中身を更新したら v の数字を増やすと、ブラウザが「新しいファイル」と判断して読み直す。-->
-        <link rel="stylesheet" href="styles/main.css?v=2">
+        <link rel="stylesheet" href="styles/main.css?v=3">
         <link rel="stylesheet" href ="styles/modal.css?v=2">
         <link rel="stylesheet" href = "styles/responsive.css?v=2">
         <link rel="stylesheet" href = "styles/auth.css?v=2">
@@ -40,20 +40,29 @@
     <body>
     <div id="app">
         <header class="glass-header">
-            <!-- 【追加】開閉メニュー：メニューボタンを押すと下のボックスがjQueryで開閉する -->
+            <!-- 【追加】開閉メニュー：メニューボタンを押すと左からドロワーがスライドインする -->
             <div class = "submenu">
                 <button class = "action-btn menu-btn" id = "menu-box">
                     <i data-lucide="menu"></i>
                 </button>
-                <!-- 【追加】開閉するボックス本体。初期は display:none で閉じておく -->
-                <div class = "submenu-content" id = "submenu-content" style = "display: none;">
+                <!-- 背景の暗幕。ドロワーを開いたときに表示され、タップで閉じる -->
+                <div class = "drawer-overlay" id = "drawer-overlay"></div>
+                <!-- 左から出てくるドロワー本体。CSSの left でアニメーションする -->
+                <nav class = "submenu-content" id = "submenu-content">
+                    <div class = "drawer-header">
+                        <span class = "drawer-title">MENU</span>
+                        <button class = "drawer-close" id = "drawer-close">
+                            <i data-lucide="x"></i>
+                        </button>
+                    </div>
+                    <a href = "index.html" class = "submenu-item">ホーム</a>
                     <a href = "privacy-policy.html" class = "submenu-item">プライバシーポリシー</a>
-                </div>
+                </nav>
             </div>
             <div class="logo">
                 <span>reCoder</span>
             </div>
-            <button id = "logout-btn">ログアウト</button>
+            <button id = "logout-btn">Log Out</button>
         </header>
 
         <main class="main-content">
@@ -215,7 +224,7 @@
     <script src="js/app.js?v=2"></script>
 
     <!-- 【追加】ヘッダーの開閉メニュー用(jQueryアニメーション) -->
-    <script src="js/menu.js?v=2"></script>
+    <script src="js/menu.js?v=3"></script>
 
     
     

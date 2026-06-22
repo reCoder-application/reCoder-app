@@ -1,21 +1,36 @@
-// ヘッダーの開閉メニュー（jQueryでアニメーション）
-// メニューボタン(#menu-box)を押すと、開閉ボックス(#submenu-content)が
-// slideToggle でスーッと開いたり閉じたりする。
-// ボックス内の「プライバシーポリシー」は通常の<a>リンクなので、押すとそのページへ遷移する。
+// ヘッダーの開閉メニュー（左から出るドロワー）
+// メニューボタン(#menu-box)を押すと、ドロワー(#submenu-content)と
+// 背景の暗幕(#drawer-overlay)に "open" クラスを付け外しする。
+// 実際のスライドや暗幕のフェードは、CSS側の transition が担当する。
+// open クラスが付く  → CSSで left:0 になり、左から画面内へスライドイン
+// open クラスが外れる → CSSで left:-300px に戻り、左外へスライドアウト
 
 $(function () {
-    // メニューボタンのクリックで開閉ボックスをアニメーション開閉する
-    // slideToggle(時間ms): 開いていれば閉じ、閉じていれば開く（高さ方向のアニメーション）
-    $('#menu-box').on('click', function (e) {
-        e.stopPropagation(); // クリックが下記の「外側クリックで閉じる」処理に伝わらないようにする
-        $('#submenu-content').slideToggle(200);
-    });
+    // ドロワーを開く：本体と暗幕の両方に open を付ける
+    function openDrawer() {
+        $('#submenu-content').addClass('open');
+        $('#drawer-overlay').addClass('open');
+    }
 
-    // メニューの外側をクリックしたら、開いているボックスを閉じる
-    $(document).on('click', function (e) {
-        // クリックした場所がメニュー領域(.submenu)の外なら閉じる
-        if (!$(e.target).closest('.submenu').length) {
-            $('#submenu-content').slideUp(200);
+    // ドロワーを閉じる：両方から open を外す
+    function closeDrawer() {
+        $('#submenu-content').removeClass('open');
+        $('#drawer-overlay').removeClass('open');
+    }
+
+    // メニューボタンで開閉を切り替える
+    $('#menu-box').on('click', function (e) {
+        e.stopPropagation();
+        if ($('#submenu-content').hasClass('open')) {
+            closeDrawer();
+        } else {
+            openDrawer();
         }
     });
+
+    // ドロワー内の「×」ボタンで閉じる
+    $('#drawer-close').on('click', closeDrawer);
+
+    // 背景の暗幕をタップしても閉じる
+    $('#drawer-overlay').on('click', closeDrawer);
 });

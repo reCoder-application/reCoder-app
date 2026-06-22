@@ -79,32 +79,81 @@ body {
     border-color: white;
 }
 
-/* 開閉メニュー */
+/* 開閉メニュー（左から出るドロワー） */
 .submenu {
-    position: relative; /* 開閉ボックスの位置の基準 */
+    position: relative; /* メニューボタンの位置の基準 */
 }
 
+/* メニューを開いたときの背景の暗幕。タップすると閉じる */
+.drawer-overlay {
+    position: fixed;
+    inset: 0; /* 画面全体を覆う */
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+.drawer-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 左から出てくるドロワー本体 */
 .submenu-content {
-    position: absolute;
-    top: 100%;              /* メニューボタンのすぐ下 */
-    left: 0;
-    margin-top: 8px;
-    min-width: 200px;
-    background: rgba(18, 18, 18, 0.95);
-    border: 1px solid var(--glass-border);
-    border-radius: 8px;
-    backdrop-filter: blur(10px);
-    overflow: hidden;
-    z-index: 200;
+    position: fixed;
+    top: 0;
+    left: -300px; /* 画面の左外に隠しておく */
+    width: 280px;
+    height: 100vh;
+    background: #1a1a1a;
+    border-right: 1px solid var(--glass-border);
+    overflow-y: auto;
+    z-index: 1000;
     text-align: left;
+    transition: left 0.3s ease; /* 左からスッと出てくるアニメーション */
+}
+.submenu-content.open {
+    left: 0; /* 画面の中へスライドイン */
+}
+
+/* ドロワー上部（タイトルと閉じる「×」ボタン） */
+.drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--glass-border);
+}
+.drawer-title {
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--text-main);
+}
+.drawer-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 6px;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.drawer-close:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .submenu-item {
     display: block;
-    padding: 12px 16px;
+    padding: 16px 20px;
     color: var(--text-main);
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     transition: background 0.2s, color 0.2s;
 }
 

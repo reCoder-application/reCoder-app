@@ -13,7 +13,7 @@
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Philosopher&display=swap" >
-        <link rel="stylesheet" href="styles/privacy-policy.css">
+        <link rel="stylesheet" href="styles/privacy-policy.css?v=3">
 
         
         
@@ -37,10 +37,19 @@
                     <button class = "action-btn menu-btn" id = "menu-box">
                         <i data-lucide="menu"></i>
                     </button>
-                    <!-- 【追加】開閉するボックス本体。初期は display:none で閉じておく -->
-                    <div class = "submenu-content" id = "submenu-content" style = "display: none;">
+                    <!-- 背景の暗幕。ドロワーを開いたときに表示され、タップで閉じる -->
+                    <div class = "drawer-overlay" id = "drawer-overlay"></div>
+                    <!-- 左から出てくるドロワー本体 -->
+                    <nav class = "submenu-content" id = "submenu-content">
+                        <div class = "drawer-header">
+                            <span class = "drawer-title">MENU</span>
+                            <button class = "drawer-close" id = "drawer-close">
+                                <i data-lucide="x"></i>
+                            </button>
+                        </div>
                         <a href = "index.html" class = "submenu-item">ホーム</a>
-                    </div>
+                        <a href = "privacy-policy.html" class = "submenu-item">プライバシーポリシー</a>
+                    </nav>
                 </div>
                 <div class="logo">
                     <span>reCoder</span>
@@ -122,7 +131,7 @@
         <script src="js/firebase-config.js?v=2"></script>
 
         <!-- メニュー開閉用のJS -->
-        <script src="js/menu.js?v=1"></script>
+        <script src="js/menu.js?v=3"></script>
 
         <!-- このページ専用のログアウト処理 -->
         <!-- 注意: home用の auth.js は home画面専用の要素を参照しており、このページで読むとエラーになるため使わない -->
