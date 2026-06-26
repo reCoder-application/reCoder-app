@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang = "ja">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name = "description" content = "reCoder利用方法">
+
+        <title>Description</title>
+
+        <meta name="viewport" content = "width=device-width, initial-scale=1">
+
+        <link rel = "icon" href = "images/logo.png">
+        <link rel="stylesheet" href="styles/main.css?v=3">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Philosopher&display=swap" >
+        <link rel="stylesheet" href="styles/privacy-policy.css?v=3">
+
+        <script src="https://unpkg.com/lucide@latest"></script>
+
+          <!--jQueryの読み込み-->
+        <script
+        src="https://code.jquery.com/jquery-4.0.0.min.js"
+        integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao="
+        crossorigin="anonymous"></script>
+
+    </head>
+    <body>
+        <div id = "description">
+            <header class="glass-header">
+                <!--開閉メニュー：メニューボタンを押すと左からドロワーがスライドインする -->
+                <div class = "submenu">
+                    <button class = "action-btn menu-btn" id = "menu-box">
+                        <i data-lucide="menu"></i>
+                    </button>
+                    <!-- 背景の暗幕。ドロワーを開いたときに表示され、タップで閉じる -->
+                    <div class = "drawer-overlay" id = "drawer-overlay"></div>
+                    <!-- 左から出てくるドロワー本体。CSSの left でアニメーションする -->
+                    <nav class = "submenu-content" id = "submenu-content">
+                        <div class = "drawer-header">
+                            <span class = "drawer-title">MENU</span>
+                            <button class = "drawer-close" id = "drawer-close">
+                                <i data-lucide="x"></i>
+                            </button>
+                        </div>
+                        <a href = "index.html" class = "submenu-item">ホーム</a>
+                        <a href = "description.html" class = "submenu-item">reCoderの使い方</a>
+                        <a href = "privacy-policy.html" class = "submenu-item">プライバシーポリシー</a>
+                    </nav>
+                </div>
+                <div class="logo">
+                    <span>reCoder</span>
+                </div>
+                <button id = "logout-btn">Log Out</button>
+            </header>
+
+
+
+
+
+
+        </div>
+
+        <script>
+            lucide.createIcons();
+        </script>
+        <script src = "js/menu.js"></script>
+    </body>
+
+</html>
