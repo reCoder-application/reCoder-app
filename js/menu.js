@@ -19,6 +19,7 @@ $(function () {
     }
 
     // メニューボタンで開閉を切り替える
+    // onメソッドでイベントを設定
     $('#menu-box').on('click', function (e) {
         e.stopPropagation();
         if ($('#submenu-content').hasClass('open')) {
