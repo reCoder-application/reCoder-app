@@ -29,7 +29,7 @@ $(function () {
     });
 
     // ドロワー内の「×」ボタンで閉じる
-    $('#drawer-close').on('click', closeDrawer);
+    $('#drawer-close').on('click', closeDrawer); // クリックして関数closeDrawer呼び出し
 
     // 背景の暗幕をタップしても閉じる
     $('#drawer-overlay').on('click', closeDrawer);
