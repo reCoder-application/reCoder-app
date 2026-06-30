@@ -23,11 +23,6 @@ function switchPage(pageName) {
     }
 }
 
-$(document).ready(function() {
-    $('.submenu').on('click', function() {
-        $(this).next().toggleClass('hidden');
-    })
-})
 
 function logDate(timestamp) {
     const now = new Date(timestamp); // タイムスタンプから日付を取得
