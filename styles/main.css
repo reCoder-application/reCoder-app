@@ -69,7 +69,7 @@ input[type = "text"]:focus {
     justify-content: space-between;
     align-items: center; /*要素位置*/
     padding: 16px 24px;
-    font-family: 'Outfit', sans-serif;
+    font-family: serif;
     background: rgba(18, 18, 18, 0.8); /*少し透ける黒*/
     backdrop-filter: blur(10px); /*すりガラス効果*/
     border-bottom: 1px solid var(--glass-border);
@@ -110,6 +110,7 @@ input[type = "text"]:focus {
     font-weight: 700;
     letter-spacing: 0.1em;
     color: var(--text-main);
+
 }
 .drawer-close {
     display: flex;
@@ -200,6 +201,7 @@ input[type = "text"]:focus {
     align-items: flex-start; /*垂直方向の揃え*/
     margin-bottom: 12px;
     gap: 16px; /* 名前とバッジの間に最低限の隙間を確保 */
+    font-family: serif;
 }
 
 h3 {
@@ -233,6 +235,7 @@ h3 {
     border-radius: 8px;
     color: #ddd;
     font-size: 0.9rem;
+    font-family: serif;
     line-height: 1.5;
     display: flex;
     align-items: flex-start;
