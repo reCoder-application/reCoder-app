@@ -27,7 +27,7 @@ body {
     align-items: center; /*要素位置*/
     justify-content: space-between;
     padding: 16px 24px;
-    font-family: 'Outfit', sans-serif;
+    font-family: serif;
     background: rgba(18, 18, 18, 0.8); /*少し透ける黒*/
     backdrop-filter: blur(10px); /*すりガラス効果*/
     border-bottom: 1px solid var(--glass-border);
