@@ -89,18 +89,18 @@ input[type = "text"]:focus {
     inset: 0; /* top/right/bottom/left をすべて0に＝画面全体を覆う */
     background: rgba(0, 0, 0, 0.5);
     z-index: 999;
-    opacity: 0;
+    opacity: 0; 
     visibility: hidden; /* 閉じているときは触れない・見えない */
     transition: opacity 0.3s ease;
 }
 .drawer-overlay.open {
-    opacity: 1;
-    visibility: visible;
+    opacity: 1; /*要素の不透明度を指定(0.0: 完全に透明、 1.0: 完全に不透明)*/
+    visibility: visible; /* 要素を表示するか非表示にするか。visible か hiddenを指定 */
 }
 
 /* ドロワー上部（タイトルと閉じる「×」ボタンを並べる） */
 .drawer-header {
-    display: flex;
+    display: flex; 
     align-items: center;
     justify-content: space-between;
     padding: 16px 20px;
