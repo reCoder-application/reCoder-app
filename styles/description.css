@@ -1,0 +1,9 @@
+@charset "UTF-8";
+#top-desc {
+    font-family: serif;
+    font-size: 16px;
+}
+
+#top-desc h3{
+    text-align: center;
+}
