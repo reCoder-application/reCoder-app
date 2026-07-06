@@ -1,0 +1,14 @@
+@charset "UTF-8";
+#top-desc {
+    font-family: serif;
+    font-size: 16px;
+    top: 0;
+}
+
+#top-desc h3{
+    text-align: center;
+}
+
+#top-desc p{
+    margin: 0;
+}

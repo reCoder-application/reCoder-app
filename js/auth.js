@@ -1,3 +1,5 @@
+// ログイン認証を行うプログラム
+
 const authPage = document.getElementById('auth-page');
 const homePage = document.getElementById('home-page');
 const addBtn = document.getElementById('add-btn'); // 右下の追加ボタン
