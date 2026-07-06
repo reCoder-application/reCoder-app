@@ -39,6 +39,7 @@ function resetForm() {
     document.getElementById('country').value = "";
     document.getElementById('farm').value = "";
     document.getElementById('variety').value = "";
+    document.getElementById('roastLevel').value = "";
     document.getElementById('aroma').value = "";
     document.getElementById('process').value = "";
     document.getElementById('dripper').value = "";
@@ -78,11 +79,13 @@ function renderCard(log) {
                         <span><i data-lucide="tree-deciduous"></i>${log.farm}</span>
                     </div>
 
-                    <!---品種--->
+                    <!---品種・プロセス・焙煎度--->
                     <div class="meta-info" style="margin-top: 4px;">
                         <span><i data-lucide="sprout"></i> ${log.variety}</span>
                         <span>/</span>
                         <span><i data-lucide="droplets"></i> ${log.process || 'N/A'}</span>
+                        <span>/</span>
+                        <span><i data-lucide="flame"></i> ${log.roastLevel}<span>
                     </div>
 
                     <!---プロセスと使ったドリッパー--->
@@ -228,6 +231,7 @@ saveBtn.addEventListener('click', async function() {
     const country = document.getElementById('country').value;
     const farm = document.getElementById('farm').value;
     const variety = document.getElementById('variety').value;
+    const variety = document.getElementById('roastLevel').value;
     const aroma = document.getElementById('aroma').value;
     const process = document.getElementById('process').value;
     const dripper = document.getElementById('dripper').value;
@@ -255,6 +259,7 @@ saveBtn.addEventListener('click', async function() {
         country: country,
         farm: farm,
         variety: variety,
+        roastLevel: roastLevel,
         aroma: aroma,
         process: process,
         dripper: dripper,
@@ -365,6 +370,7 @@ cardArea.addEventListener('click', async function(e) {
         document.getElementById('country').value = targetLog.country;
         document.getElementById('farm').value = targetLog.farm;
         document.getElementById('variety').value = targetLog.variety;
+        document.getElementById('variety').value = targetLog.roastLevel;
         document.getElementById('aroma').value = targetLog.aroma;
         document.getElementById('process').value = targetLog.process;
         document.getElementById('dripper').value = targetLog.dripper;
