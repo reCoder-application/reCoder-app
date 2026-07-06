@@ -231,7 +231,7 @@ saveBtn.addEventListener('click', async function() {
     const country = document.getElementById('country').value;
     const farm = document.getElementById('farm').value;
     const variety = document.getElementById('variety').value;
-    const variety = document.getElementById('roastLevel').value;
+    const roastLevel = document.getElementById('roastLevel').value;
     const aroma = document.getElementById('aroma').value;
     const process = document.getElementById('process').value;
     const dripper = document.getElementById('dripper').value;
