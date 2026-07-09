@@ -1,8 +1,16 @@
 @charset "UTF-8";
 #top-desc {
-    font-family: serif;
+    
     font-size: 16px;
     top: 0;
+}
+
+#description {
+    font-family: serif;
+}
+
+#description h3{
+    text-align: center;  
 }
 
 #top-desc h3{
