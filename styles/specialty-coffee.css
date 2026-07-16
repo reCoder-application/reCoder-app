@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+/* このページ内の文字はすべてserif(明朝体系)フォントで表示する */
+#specialty-coffee {
+    font-family: serif;
+}
