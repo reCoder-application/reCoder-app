@@ -370,7 +370,7 @@ cardArea.addEventListener('click', async function(e) {
         document.getElementById('country').value = targetLog.country;
         document.getElementById('farm').value = targetLog.farm;
         document.getElementById('variety').value = targetLog.variety;
-        document.getElementById('variety').value = targetLog.roastLevel;
+        document.getElementById('roastLevel').value = targetLog.roastLevel;
         document.getElementById('aroma').value = targetLog.aroma;
         document.getElementById('process').value = targetLog.process;
         document.getElementById('dripper').value = targetLog.dripper;
