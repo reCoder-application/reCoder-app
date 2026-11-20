@@ -143,7 +143,7 @@ flowchart TB
 ```mermaid
 flowchart TB
     App --> AuthProvider
-    AuthProvider --> Router[BrowserRouter / HashRouter]
+    AuthProvider --> Router[HashRouter]
     Router --> Layout["Layout（Header + Drawer）"]
 
     Layout --> LoginPage
@@ -189,16 +189,98 @@ flowchart TB
   - **useParams()**: URL の `:id` の部分に入っている値を取り出すフック。
 - 今の `goToDetail()` などのページ移動関数は、React Router の `useNavigate()` で書き直します。
   - **useNavigate()**: コードから画面移動するための関数を返すフック。`navigate('/home', { replace: true })` で、今の `location.replace()` と同じく履歴を残さない移動ができる。
-- **古いURLの互換**: ブックマーク対策として、`/detail.html?id=X` などにアクセスされたら新URLへ転送する `LegacyRedirect` コンポーネントを用意します（任意）。
+- **古いURLの互換**: ブックマーク対策として、`detail.html?id=X` などの旧URLを新URLへ転送します。GitHub Pages では React で受け止められないため、転送専用の小さなHTMLを置く方式にします（4-2 で説明）。
 
-### ホスティングに関する注意
+### 4-1. GitHub Pages では `HashRouter` を使う
 
-SPA では `/beans/abc123` を直接開いたときも `index.html` を返すようにサーバー側の設定が必要です。
+デプロイ先は **GitHub Pages** なので、ルーターは **`HashRouter`** に決定します。
 
-- **Firebase Hosting / Vercel / Netlify**: 「すべてのURLを index.html へ」という設定（rewrite）を1行足すだけ
-- **GitHub Pages**: その設定ができないため、`HashRouter`（URLが `/#/beans/abc123` になる方式）を使う
+- **HashRouter**: URL の `#` より後ろを使って画面を切り替える方式。`#` より後ろはサーバーに送られないので、サーバーには常に `index.html` へのアクセスとして届く。
 
-今どこにデプロイしているかによって `BrowserRouter` と `HashRouter` のどちらにするかを決めます。
+**理由**: SPA では `/beans/abc123` のようなURLを直接開いた（またはリロードした）ときも、サーバーが `index.html` を返す必要があります。Firebase Hosting などには「すべてのURLを index.html へ」という設定がありますが、GitHub Pages にはありません。`BrowserRouter`（`#` を使わない普通のURL）にすると、リロードしただけで 404 になってしまいます。
+
+実際のURLは次のようになります（リポジトリ `reCoder-application/reCoder-app` から推定）。
+
+```text
+https://recoder-application.github.io/reCoder-app/#/home
+https://recoder-application.github.io/reCoder-app/#/beans/abc123
+https://recoder-application.github.io/reCoder-app/#/beans/abc123/brews/new
+```
+
+上の表の「React 版のURL」は、すべてこの `#` の後ろの部分を指します。
+
+> **採用しなかった案**: `BrowserRouter` のまま `404.html` に「index.html へ転送するスクリプト」を置く方法もあります。URL から `#` を消せますが、一瞬 404 ページを経由するうえに仕組みが分かりにくいので採用しません。
+
+### 4-2. 旧URLの転送
+
+ブックマークされている `https://…/reCoder-app/detail.html?id=X` を開くと、GitHub Pages はファイルを探しに行きます。`index.html` 以外には React が関われないので、**旧ファイル名と同じ名前の転送用HTML** を `public/` に置きます。
+
+- `public/` に置いたファイルは、ビルド後もそのままの名前で公開される
+- 中身は「URLの `?id=` などを読み取り、新しい `#/beans/X` のURLへ `location.replace()` する」だけの数行
+
+| 置くファイル | 転送先 |
+|---|---|
+| `home.html` | `./#/home` |
+| `detail.html?id=X` | `./#/beans/X` |
+| `bean-form.html` / `bean-form.html?id=X` | `./#/beans/new` / `./#/beans/X/edit` |
+| `brew-form.html?beanId=X&brewId=Y` | `./#/beans/X/brews/new` / `./#/beans/X/brews/Y/edit` |
+| `description.html` `specialty-coffee.html` `privacy-policy.html` | `./#/guide` など |
+
+ログイン画面の `index.html` は React の入口そのものなので、転送は不要です。
+
+### 4-3. GitHub Pages 向けの設定
+
+#### Vite の `base`
+
+GitHub Pages のプロジェクトサイトは `https://<組織名>.github.io/<リポジトリ名>/` のように、**サブフォルダの下で公開** されます。Vite は何も指定しないとファイルを `/assets/...`（ドメイン直下）から読もうとするので、CSS や JS が 404 になります。
+
+`vite.config.js` で `base: '/reCoder-app/'` を指定します。
+
+- **base**: アプリを公開する場所（パス）を Vite に教える設定。ビルド時に、すべてのファイルの読み込み先にこのパスが付く。
+
+> リポジトリ名を変えたり独自ドメインを使ったりした場合は、`base` も合わせて変える必要があります。
+
+#### GitHub Actions で自動デプロイする
+
+今は「`main` ブランチのファイルをそのまま公開」する設定になっているはずです。React 版はビルド（変換）してできた `dist/` フォルダを公開する必要があるため、**GitHub Actions** で「`main` に push されたらビルドして公開」を自動化します。
+
+- **GitHub Actions**: GitHub 上で、push などをきっかけに決まった処理（ビルド・テスト・デプロイなど）を自動で実行してくれる仕組み。手順は `.github/workflows/` に YAML ファイル（**ワークフロー**）で書く。
+- `dist/` は `.gitignore` に入っているのでリポジトリには含めない。GitHub Actions の中でビルドして、そのまま公開する。
+
+ワークフローの流れ（`.github/workflows/deploy.yml`）:
+
+```text
+main に push
+ → リポジトリを取得（actions/checkout）
+ → Node.js を用意（actions/setup-node）
+ → npm ci（依存パッケージのインストール）
+ → npm test（Vitest。失敗したら公開しない）
+ → npm run build（dist/ を作る）
+ → dist/ を公開用にまとめる（actions/upload-pages-artifact）
+ → GitHub Pages に公開（actions/deploy-pages）
+```
+
+- **npm ci**: `package-lock.json` に書かれたバージョンのとおりに、パッケージをきっちりインストールするコマンド。自動ビルドでは `npm install` よりこちらを使う。
+- **artifact（アーティファクト）**: ワークフローの途中で作ったファイル一式のこと。ここでは `dist/` を公開用に固めたもの。
+
+リポジトリの **Settings → Pages → Source** を「Deploy from a branch」から **「GitHub Actions」** に切り替えたタイミングで、React 版が公開されます。それまでは今の HTML 版が公開されたままなので、開発は別ブランチで安全に進められます。
+
+#### Firebase の設定値の渡し方
+
+`.env.local` は git に含めないため、GitHub Actions のビルドでは読めません。そこで次のように分けます。
+
+- **手元の開発**: `.env.local` に書く
+- **GitHub Actions**: リポジトリの **Settings → Secrets and variables → Actions → Variables** に同じ名前（`VITE_FIREBASE_API_KEY` など）で登録し、ビルドの手順で環境変数として渡す
+
+Firebase の Web 用設定値は秘密の情報ではない（データはセキュリティルールで守られている）ので、Secrets ではなく Variables で十分です。
+
+#### Firebase Authentication の承認済みドメイン
+
+Firebase コンソールの **Authentication → 設定 → 承認済みドメイン** に `recoder-application.github.io` が入っていることを確認します（今の HTML 版がすでに GitHub Pages で動いているなら登録済みのはずです）。URL に `#` が付いてもドメインは同じなので、追加の設定は不要です。
+
+#### キャッシュ
+
+GitHub Pages はファイルを最大10分ほどブラウザにキャッシュさせます。Vite はビルドのたびに JS・CSS のファイル名を変える（中身から作ったハッシュを付ける）ので古いファイルが使われることはありませんが、`index.html` だけはデプロイ直後の数分間、古いものが表示される場合があります。
 
 ---
 
@@ -570,12 +652,22 @@ React版: 手元の抽出一覧 + 今回の記録 で集計値を計算
 
 ```text
 reCoder-app/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml          # GitHub Pages への自動デプロイ（4-3）
 ├── index.html                  # Vite の入口（1つだけ）
 ├── package.json
-├── vite.config.js
-├── .env.local                  # Firebase の設定値（VITE_FIREBASE_API_KEY など）
-├── public/
-│   └── images/logo.png
+├── vite.config.js              # base: '/reCoder-app/'
+├── .env.local                  # Firebase の設定値（VITE_FIREBASE_API_KEY など。git には含めない）
+├── public/                     # ビルド後もそのままの名前で公開されるファイル
+│   ├── images/logo.png
+│   ├── home.html               # 旧URLの転送用（4-2）
+│   ├── detail.html             # 〃
+│   ├── bean-form.html          # 〃
+│   ├── brew-form.html          # 〃
+│   ├── description.html        # 〃
+│   ├── specialty-coffee.html   # 〃
+│   └── privacy-policy.html     # 〃
 └── src/
     ├── main.jsx                # React の起動・CSS の読み込み
     ├── App.jsx                 # ルーティングの定義
@@ -662,7 +754,7 @@ reCoder-app/
         └── format.test.js
 ```
 
-- **`.env.local`**: 環境ごとの設定値を書くファイル。Vite では `VITE_` で始まる名前にすると `import.meta.env.VITE_FIREBASE_API_KEY` のようにコードから読める。Firebase の apiKey は公開されても問題ない値（セキュリティはルールで守る）ですが、設定をコードから分けておくと開発用・本番用の切り替えが楽になります。
+- **`.env.local`**: 環境ごとの設定値を書くファイル。Vite では `VITE_` で始まる名前にすると `import.meta.env.VITE_FIREBASE_API_KEY` のようにコードから読める。Firebase の apiKey は公開されても問題ない値（セキュリティはルールで守る）ですが、設定をコードから分けておくと開発用・本番用の切り替えが楽になります。GitHub Actions でのビルド時の渡し方は 4-3 を参照してください。
 
 ---
 
@@ -703,7 +795,9 @@ reCoder-app/
 ### ステップ0: 準備
 - Vite + React のプロジェクトを作成し、React Router・Firebase・lucide-react・Chart.js を追加
 - 今の `styles/` と `images/` をコピーして、`main.jsx` で CSS を読み込む
-- デプロイ先を確認し、`BrowserRouter` か `HashRouter` かを決める
+- ルーターは `HashRouter`、`vite.config.js` の `base` は `'/reCoder-app/'` にする（4-1・4-3）
+- `npm run build` → `npm run preview` で、サブフォルダ配下でも CSS・画像が読み込めることを確認する
+  - **npm run preview**: ビルドしてできた `dist/` を、本番に近い形で手元に表示して確認するコマンド
 
 ### ステップ1: 画面に依存しない処理の移植
 - `domain/` `utils/` に純粋な関数を移す（中身はほぼコピー）
@@ -734,9 +828,12 @@ reCoder-app/
 
 ### ステップ7: 切り替え
 - 「8. 互換性チェックリスト」を全部確認
-- 古いURLからの転送（`LegacyRedirect`）を用意
+- 旧URLの転送用HTMLを `public/` に用意（4-2）
+- `.github/workflows/deploy.yml` を作成し、Settings → Variables に Firebase の設定値を登録（4-3）
 - 旧 HTML / JS / `tools/check_pages.py` を削除し、README を更新
-- デプロイ設定（ビルドコマンド `npm run build`、公開フォルダ `dist/`、SPA 用の rewrite）
+- 作業ブランチを `main` にマージし、Settings → Pages → Source を「GitHub Actions」に切り替える
+- 公開後、旧URL（`detail.html?id=X` など）からの転送とリロード時の表示を実機で確認する
+- 問題があれば Source を「Deploy from a branch」に戻し、マージ前のコミットを公開すれば HTML 版にすぐ戻せる
 
 ---
 
@@ -744,8 +841,11 @@ reCoder-app/
 
 | リスク | 対策 |
 |---|---|
-| URL が変わり、ブックマークが使えなくなる | `LegacyRedirect` で旧URLを新URLへ転送する |
-| GitHub Pages では SPA の直接アクセスが 404 になる | `HashRouter` を使う、または Firebase Hosting などへ移す |
+| URL が変わり、ブックマークが使えなくなる | 旧ファイル名の転送用HTMLを `public/` に置く（4-2） |
+| GitHub Pages では SPA の直接アクセス・リロードが 404 になる | `HashRouter` を使う（4-1） |
+| サブフォルダ公開のため CSS・JS が 404 になる | `vite.config.js` の `base` を `'/reCoder-app/'` にする（4-3） |
+| GitHub Actions のビルドで Firebase の設定値が読めない | リポジトリの Variables に登録して渡す（4-3） |
+| デプロイ直後、古い `index.html` が数分表示される | GitHub Pages のキャッシュ仕様。数分待つか再読み込みで解消する |
 | キャッシュにより、別端末の変更が反映されない | `onSnapshot` 購読にする（6-2） |
 | React 19 の開発モード（StrictMode）では `useEffect` が2回実行される | 購読の解除（`unsubscribe`）とグラフの `destroy()` を必ず後片付けに書く。旧データ移行は `migratedToBrews` の判定で二重実行されないが、念のため同時実行を防ぐフラグを持つ |
 | 楽観的更新の失敗時に画面と実データがずれる | 失敗したら元に戻してエラーを表示する |
@@ -784,7 +884,12 @@ reCoder-app/
 | Vite | React などのコードをブラウザ用に変換・まとめるビルドツール |
 | React Router | URL と画面の対応を管理するライブラリ |
 | Outlet | 子ルートの画面を表示する場所の目印 |
-| BrowserRouter / HashRouter | URL の形式の違い。`/beans/x` か `/#/beans/x` か |
+| BrowserRouter / HashRouter | URL の形式の違い。`/beans/x` か `/#/beans/x` か。GitHub Pages では HashRouter を使う |
+| base（Vite） | アプリを公開するパスを Vite に教える設定。GitHub Pages では `/リポジトリ名/` |
+| GitHub Actions | push などをきっかけに、ビルドやデプロイを GitHub 上で自動実行する仕組み |
+| ワークフロー | GitHub Actions で実行する手順を書いた YAML ファイル |
+| artifact | ワークフローの途中で作ったファイル一式。ここでは公開する `dist/` |
+| npm ci | `package-lock.json` のとおりにパッケージをインストールするコマンド |
 | modular 版 SDK | 必要な関数だけを import して使う Firebase の新しい書き方 |
 | ツリーシェイキング | 使われていないコードをビルド時に取り除く仕組み |
 | コード分割 | コードを複数ファイルに分け、必要なときに読み込む方法 |
