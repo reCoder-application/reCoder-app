@@ -197,7 +197,50 @@ flowchart TB
 
 - **HashRouter**: URL の `#` より後ろを使って画面を切り替える方式。`#` より後ろはサーバーに送られないので、サーバーには常に `index.html` へのアクセスとして届く。
 
-**理由**: SPA では `/beans/abc123` のようなURLを直接開いた（またはリロードした）ときも、サーバーが `index.html` を返す必要があります。Firebase Hosting などには「すべてのURLを index.html へ」という設定がありますが、GitHub Pages にはありません。`BrowserRouter`（`#` を使わない普通のURL）にすると、リロードしただけで 404 になってしまいます。
+#### なぜ必要か（今の仕組みとの違い）
+
+今のreCoderは「1画面＝1個の実在するHTMLファイル」という作りです。
+
+```text
+一覧画面   → home.html
+詳細画面   → detail.html?id=abc123
+```
+
+ブラウザが `detail.html?id=abc123` にアクセスすると、サーバー（GitHub Pages）は「`detail.html` というファイルをください」と言われたと理解し、実在するそのファイルを返します。
+
+React版（SPA）にすると、実在するHTMLファイルは `index.html` 1つだけになります。画面の切り替えは、ブラウザの中でJavaScript（React）が行います。ここで次の違いが生まれます。
+
+1. **アプリの中でボタンを押して画面を移動する場合**: JavaScriptが画面の中身を差し替えるだけなので、サーバーには何も聞きに行かず問題なく動く
+2. **そのURLを直接ブラウザに打ち込む・リロードする・ブックマークから開く場合**: ブラウザは「`/beans/abc123` というファイルをください」とサーバーに聞きに行く。しかし GitHub Pages には `beans/abc123` というファイルは存在しないため **404エラー** になる
+
+Firebase Hosting や Vercel には「どんなURLが来ても `index.html` を返す」というサーバー側の設定（リライト）がありますが、**GitHub Pages にはその設定がありません。** そのためリロードやブックマーク、共有したリンクがすべて機能しなくなってしまいます。
+
+#### `HashRouter` がこれを解決する仕組み
+
+`HashRouter` は、画面の種類を表す情報を URL の `#`（ハッシュ記号）より後ろに入れる方式です。
+
+```text
+通常のURL（BrowserRouter）:  https://recoder-application.github.io/reCoder-app/beans/abc123
+HashRouterのURL:            https://recoder-application.github.io/reCoder-app/#/beans/abc123
+                                                                          ↑ここから後ろ
+```
+
+ポイントは、**ブラウザは `#` より後ろの部分をサーバーに一切送らない** という昔からの仕様です（元々は「ページ内の特定の見出しへジャンプする」ために使われてきた仕組みです）。
+
+`#/beans/abc123` というURLを直接開いても、サーバーに実際に聞きに行くのは次の部分だけです。
+
+```text
+https://recoder-application.github.io/reCoder-app/
+```
+
+これは `index.html` を返すだけの普通のアクセスなので、GitHub Pages は何も困らず `index.html` を返せます。HTMLが届いた後、ブラウザの中で React が「`#` の後ろが `/beans/abc123` になっているから詳細画面を表示しよう」と判断し、正しい画面を出します。
+
+| | 直接アクセス・リロード | GitHub Pagesでの可否 |
+|---|---|---|
+| `BrowserRouter`（`#`なし） | サーバーに `beans/abc123` というファイルを要求 → 存在せず404 | ❌ そのままでは動かない |
+| `HashRouter`（`#`あり） | サーバーには `/`（＝index.html）しか要求されない | ✅ 問題なく動く |
+
+デメリットは「URLに `#` が入って少し見た目が長くなる」ことだけで、機能的な制約はほぼありません。将来 Firebase Hosting などサーバー側の設定ができる環境へ引っ越す場合は、`BrowserRouter` に戻すことも可能です（React Router 側の数行の変更で済みます）。
 
 実際のURLは次のようになります（リポジトリ `reCoder-application/reCoder-app` から推定）。
 
